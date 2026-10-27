@@ -1,0 +1,3449 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>NextGen Expo 2026 — Admin Dashboard</title>
+
+  <!-- QR CAMERA SCANNER LIBRARY -->
+  <script src="https://unpkg.com/html5-qrcode"></script>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      color: #222;
+    }
+
+    /* ==================================================
+       LOGIN
+       ================================================== */
+
+    #loginPage {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .login-box {
+      background: white;
+      width: 100%;
+      max-width: 420px;
+      padding: 35px;
+      border-radius: 14px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.12);
+    }
+
+    .login-box h1 {
+      text-align: center;
+      color: #003399;
+      margin-bottom: 10px;
+    }
+
+    .login-box p {
+      text-align: center;
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 12px;
+      margin: 7px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    button {
+      padding: 11px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    button:hover {
+      opacity: .9;
+    }
+
+    .primary-btn {
+      background: #003399;
+      color: white;
+    }
+
+    .success-btn {
+      background: #198754;
+      color: white;
+    }
+
+    .danger-btn {
+      background: #dc3545;
+      color: white;
+    }
+
+    .secondary-btn {
+      background: #6c757d;
+      color: white;
+    }
+
+    .message {
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 12px;
+      display: none;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .error {
+      background: #ffe5e5;
+      color: #b00000;
+    }
+
+    .success {
+      background: #e5ffe9;
+      color: #08752a;
+    }
+
+    .success-message {
+      background: #d1fae5;
+      color: #065f46;
+      padding: 5px 9px;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    .warning-message {
+      background: #fff3cd;
+      color: #856404;
+      padding: 5px 9px;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    .error-message {
+      background: #ffe5e5;
+      color: #b00000;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    /* ==================================================
+       ADMIN
+       ================================================== */
+
+    #adminPage {
+      display: none;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      background: #003399;
+      color: white;
+      padding: 16px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .topbar h1 {
+      margin: 0;
+      font-size: 21px;
+    }
+
+    .topbar button {
+      background: white;
+      color: #003399;
+    }
+
+    .layout {
+      display: flex;
+      min-height: calc(100vh - 65px);
+    }
+
+    .sidebar {
+      width: 220px;
+      background: #111827;
+      padding: 15px 10px;
+    }
+
+    .sidebar button {
+      width: 100%;
+      margin-bottom: 7px;
+      text-align: left;
+      background: transparent;
+      color: white;
+      border-radius: 6px;
+    }
+
+    .sidebar button:hover,
+    .sidebar button.active {
+      background: #003399;
+    }
+
+    .content {
+      flex: 1;
+      padding: 25px;
+      overflow-x: auto;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .section-title {
+      margin-top: 0;
+      color: #003399;
+    }
+
+    /* ==================================================
+       STATISTICS
+       ================================================== */
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(190px, 1fr));
+      gap: 18px;
+      margin-bottom: 25px;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 10px;
+      padding: 22px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.08);
+    }
+
+    .stat-card h3 {
+      margin-top: 0;
+      color: #555;
+      font-size: 14px;
+    }
+
+    .stat-card .number {
+      font-size: 28px;
+      font-weight: bold;
+      color: #003399;
+    }
+
+    /* ==================================================
+       PANELS / CARDS
+       ================================================== */
+
+    .panel,
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.07);
+    }
+
+    /* ==================================================
+       TABLE
+       ================================================== */
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 850px;
+    }
+
+    th {
+      background: #003399;
+      color: white;
+      padding: 12px;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 11px;
+      border-bottom: 1px solid #ddd;
+      vertical-align: middle;
+    }
+
+    tr:hover {
+      background: #f8f9fa;
+    }
+
+    /* ==================================================
+       PAYMENT AMOUNT
+       ================================================== */
+
+    .amount-paid {
+      font-size: 17px;
+      font-weight: bold;
+      color: #003399;
+      white-space: nowrap;
+    }
+
+    .payment-reference {
+      font-weight: bold;
+    }
+
+    /* ==================================================
+       STATUS
+       ================================================== */
+
+    .status {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .verified {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .pending {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .rejected {
+      background: #f8d7da;
+      color: #842029;
+    }
+
+    /* ==================================================
+       ACTION BUTTONS
+       ================================================== */
+
+    .action-buttons {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .action-buttons button {
+      padding: 8px 11px;
+      font-size: 12px;
+    }
+
+    /* ==================================================
+       QR SCANNER
+       ================================================== */
+
+    .scanner-panel {
+      background: #f8f9fa;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 18px;
+      margin-top: 20px;
+    }
+
+    #exhibitorQRScanner {
+      width: 100%;
+      max-width: 450px;
+      margin: 20px auto;
+    }
+
+    #exhibitorQRScanner video {
+      width: 100% !important;
+      border-radius: 10px;
+    }
+
+    #qrScannerStatus {
+      text-align: center;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #003399;
+    }
+
+    /* ==================================================
+       LOADING
+       ================================================== */
+
+    #loading {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .loading-box {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+
+    /* ==================================================
+       MOBILE
+       ================================================== */
+
+    @media(max-width: 800px) {
+
+      .layout {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        display: flex;
+        overflow-x: auto;
+      }
+
+      .sidebar button {
+        min-width: 130px;
+        margin-right: 5px;
+      }
+
+      .content {
+        padding: 15px;
+      }
+
+      .topbar {
+        padding: 14px;
+      }
+
+      .topbar h1 {
+        font-size: 17px;
+      }
+
+      .card,
+      .panel {
+        padding: 15px;
+      }
+
+      #exhibitorQRScanner {
+        max-width: 100%;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+<!-- ==================================================
+     LOADING
+     ================================================== -->
+
+<div id="loading">
+  <div class="loading-box">
+    Processing...
+  </div>
+</div>
+
+
+<!-- ==================================================
+     LOGIN PAGE
+     ================================================== -->
+
+<div id="loginPage">
+
+  <div class="login-box">
+
+    <h1>NextGen Expo 2026</h1>
+
+    <p>Administrator Login</p>
+
+    <input
+      type="text"
+      id="username"
+      placeholder="Username">
+
+    <input
+      type="password"
+      id="password"
+      placeholder="Password">
+
+    <button
+      class="primary-btn"
+      style="width:100%;margin-top:10px;"
+      onclick="login()">
+
+      Login
+
+    </button>
+
+    <div
+      id="loginMessage"
+      class="message">
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ==================================================
+     ADMIN PAGE
+     ================================================== -->
+
+<div id="adminPage">
+
+  <div class="topbar">
+
+    <h1>
+      NextGen Expo 2026 — Admin Dashboard
+    </h1>
+
+    <button onclick="logout()">
+      Logout
+    </button>
+
+  </div>
+
+
+  <div class="layout">
+
+    <!-- ==================================================
+         SIDEBAR
+         ================================================== -->
+
+    <div class="sidebar">
+
+      <button
+        class="active"
+        onclick="showSection('dashboard', this)">
+        Dashboard
+      </button>
+
+      <button
+        onclick="showSection('payments', this)">
+        Payments
+      </button>
+
+      <button
+        onclick="showSection('exhibitors', this)">
+        Exhibitors
+      </button>
+
+      <button
+        onclick="showSection('visitors', this)">
+        Visitors
+      </button>
+
+      <button
+        onclick="showSection('checkin', this)">
+        Check-In
+      </button>
+
+      <button
+        onclick="showSection('booths', this)">
+        Booths
+      </button>
+
+      <button
+        onclick="showSection('receipts', this)">
+        Receipts
+      </button>
+
+    </div>
+
+
+    <!-- ==================================================
+         CONTENT
+         ================================================== -->
+
+    <div class="content">
+
+
+      <!-- ==================================================
+           DASHBOARD
+           ================================================== -->
+
+      <div
+        id="dashboard"
+        class="section active">
+
+        <h2 class="section-title">
+          Dashboard
+        </h2>
+
+        <div class="stats-grid">
+
+          <div class="stat-card">
+            <h3>Total Payments</h3>
+            <div
+              class="number"
+              id="totalPayments">
+              0
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <h3>Verified Payments</h3>
+            <div
+              class="number"
+              id="verifiedPayments">
+              0
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <h3>Pending Payments</h3>
+            <div
+              class="number"
+              id="pendingPayments">
+              0
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <h3>Verified Revenue</h3>
+            <div
+              class="number"
+              id="revenue">
+              KES 0
+            </div>
+          </div>
+
+        </div>
+
+
+        <h2 class="section-title">
+          Visitor Statistics
+        </h2>
+
+        <div class="stats-grid">
+
+          <div class="stat-card">
+            <h3>Total Visitors</h3>
+            <div
+              class="number"
+              id="totalVisitors">
+              0
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <h3>Checked In</h3>
+            <div
+              class="number"
+              id="checkedInVisitors">
+              0
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <h3>Not Checked In</h3>
+            <div
+              class="number"
+              id="notCheckedInVisitors">
+              0
+            </div>
+          </div>
+
+        </div>
+
+
+        <button
+          class="primary-btn"
+          onclick="loadDashboard()">
+
+          Refresh Dashboard
+
+        </button>
+
+      </div>
+
+
+      <!-- ==================================================
+           PAYMENTS
+           ================================================== -->
+
+      <div
+        id="payments"
+        class="section">
+
+        <h2 class="section-title">
+          Payments Management —
+          Amount Paid & Verification
+        </h2>
+
+        <div class="panel">
+
+          <p>
+            <strong>Flexible Exhibition Payments</strong>
+          </p>
+
+          <p>
+            The system accepts different exhibition
+            payment amounts. Review the actual
+            <strong>Amount Paid</strong> before verifying.
+          </p>
+
+          <button
+            class="primary-btn"
+            onclick="loadPayments()">
+
+            Refresh Payments
+
+          </button>
+
+        </div>
+
+        <div class="panel">
+
+          <div class="table-wrapper">
+
+            <table id="paymentsTable">
+
+              <thead></thead>
+
+              <tbody></tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ==================================================
+           EXHIBITORS
+           ================================================== -->
+
+      <div
+        id="exhibitors"
+        class="section">
+
+        <h2 class="section-title">
+          Exhibitors
+        </h2>
+
+        <div class="panel">
+
+          <button
+            class="primary-btn"
+            onclick="loadExhibitors()">
+
+            Refresh Exhibitors
+
+          </button>
+
+        </div>
+
+        <div class="panel">
+
+          <div class="table-wrapper">
+
+            <table id="exhibitorsTable">
+
+              <thead></thead>
+
+              <tbody></tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ==================================================
+           VISITORS
+           ================================================== -->
+
+      <div
+        id="visitors"
+        class="section">
+
+        <h2 class="section-title">
+          Visitors
+        </h2>
+
+        <div class="panel">
+
+          <button
+            class="primary-btn"
+            onclick="loadVisitors()">
+
+            Refresh Visitors
+
+          </button>
+
+        </div>
+
+        <div class="panel">
+
+          <div class="table-wrapper">
+
+            <table id="visitorsTable">
+
+              <thead></thead>
+
+              <tbody></tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ==================================================
+           CHECK-IN
+           ================================================== -->
+
+      <div
+        id="checkin"
+        class="section">
+
+        <h2 class="section-title">
+          Exhibitor Check-In
+        </h2>
+
+
+        <!-- ==================================================
+             MANUAL EXHIBITOR SEARCH
+             ================================================== -->
+
+        ```html
+<!-- =========================================================
+     EXHIBITOR QR BADGE & PHONE CAMERA CHECK-IN
+     ========================================================= -->
+
+<div class="panel">
+
+  <h3>📱 Scan Exhibitor QR Code</h3>
+
+  <p style="color:#666;">
+    Use this phone's camera to scan the QR code on the
+    exhibitor's badge.
+  </p>
+
+  <!-- QR SCANNER -->
+  <div
+    id="exhibitorQRScanner"
+    style="
+      width:100%;
+      max-width:500px;
+      margin:20px auto;
+      border-radius:12px;
+      overflow:hidden;
+      background:#000;
+    ">
+  </div>
+
+  <!-- SCANNER STATUS -->
+  <div
+    id="qrScannerStatus"
+    style="
+      text-align:center;
+      margin:12px 0;
+      font-weight:bold;
+      color:#003399;
+    ">
+    Camera scanner ready.
+  </div>
+
+  <!-- START / STOP BUTTONS -->
+  <div
+    style="
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:15px;
+    ">
+
+    <button
+      class="primary-btn"
+      onclick="startExhibitorQRScanner()">
+      📷 Scan QR Code
+    </button>
+
+    <button
+      id="stopQRScannerButton"
+      class="danger-btn"
+      onclick="stopExhibitorQRScanner()"
+      style="display:none;">
+      ⛔ Stop Camera
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     MANUAL EXHIBITOR SEARCH / VERIFICATION
+     ========================================================= -->
+
+<div class="panel">
+
+  <h3>🔎 Manual Exhibitor Check-In</h3>
+
+  <p style="color:#666;">
+    If the QR code cannot be scanned, enter the Exhibitor ID
+    manually.
+  </p>
+
+  <input
+    type="text"
+    id="checkinExhibitorId"
+    placeholder="Enter Exhibitor ID"
+    autocomplete="off">
+
+  <input
+    type="text"
+    id="staffName"
+    placeholder="Staff name"
+    autocomplete="off">
+
+  <div
+    style="
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    ">
+
+    <button
+      class="primary-btn"
+      onclick="searchExhibitorForCheckIn()">
+      🔎 Find Exhibitor
+    </button>
+
+    <button
+      class="success-btn"
+      onclick="verifyExhibitorQRFromAdmin()">
+      🔐 Verify QR
+    </button>
+
+    <button
+      class="success-btn"
+      onclick="generateBadgeFromAdmin()">
+      🎫 Generate Badge
+    </button>
+
+  </div>
+
+  <div
+    id="exhibitorCheckinResult"
+    style="margin-top:20px;">
+  </div>
+
+  <div
+    id="badgeResult"
+    style="margin-top:20px;">
+  </div>
+
+</div>
+```
+
+
+        <!-- ==================================================
+             PHONE CAMERA QR SCANNER
+             ================================================== -->
+
+        <div class="scanner-panel">
+
+          <h3>
+            📷 Scan Exhibitor QR Code
+          </h3>
+
+          <p style="color:#666;">
+            Use the phone camera to scan the QR code
+            printed on the exhibitor badge.
+          </p>
+
+
+          <div style="
+            display:flex;
+            gap:10px;
+            flex-wrap:wrap;
+          ">
+
+            <button
+              class="primary-btn"
+              type="button"
+              onclick="startExhibitorQRScanner()">
+
+              📷 Start QR Scanner
+
+            </button>
+
+
+            <button
+              class="secondary-btn"
+              type="button"
+              onclick="stopExhibitorQRScanner()"
+              id="stopQRScannerButton"
+              style="display:none;">
+
+              ⏹ Stop Scanner
+
+            </button>
+
+          </div>
+
+
+          <div
+            id="exhibitorQRScanner">
+          </div>
+
+
+          <div
+            id="qrScannerStatus">
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ==================================================
+           BOOTHS
+           ================================================== -->
+
+      <div
+        id="booths"
+        class="section">
+
+        <h2 class="section-title">
+          Booth Management
+        </h2>
+
+
+        <div class="panel">
+
+          <input
+            type="text"
+            id="boothNumber"
+            placeholder="Booth Number">
+
+
+          <input
+            type="text"
+            id="boothExhibitorId"
+            placeholder="Exhibitor ID">
+
+
+          <button
+            class="primary-btn"
+            onclick="assignBooth()">
+
+            Assign Booth
+
+          </button>
+
+
+          <div
+            id="boothMessage"
+            class="message">
+          </div>
+
+        </div>
+
+
+        <div class="panel">
+
+          <button
+            class="primary-btn"
+            onclick="loadBooths()">
+
+            Refresh Booths
+
+          </button>
+
+        </div>
+
+
+        <div class="panel">
+
+          <div class="table-wrapper">
+
+            <table id="boothsTable">
+
+              <thead></thead>
+
+              <tbody></tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ==================================================
+           RECEIPTS
+           ================================================== -->
+
+      <div
+        id="receipts"
+        class="section">
+
+        <h2 class="section-title">
+          Exhibitor Receipt
+        </h2>
+
+
+        <div class="panel">
+
+          <input
+            type="text"
+            id="receiptPaymentId"
+            placeholder="Enter Payment ID">
+
+
+          <button
+            class="primary-btn"
+            onclick="loadReceipt()">
+
+            View Receipt
+
+          </button>
+
+
+          <div
+            id="receiptResult"
+            style="margin-top:20px;">
+          </div>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* ============================================================
+   LOGIN
+   ============================================================ */
+
+function login() {
+
+  var username =
+    document.getElementById("username").value.trim();
+
+  var password =
+    document.getElementById("password").value;
+
+  if (!username || !password) {
+
+    showMessage(
+      "loginMessage",
+      "Please enter username and password.",
+      "error"
+    );
+
+    return;
+  }
+
+  showLoading(true);
+
+  google.script.run
+
+    .withSuccessHandler(function(result) {
+
+      showLoading(false);
+
+      if (result && result.success) {
+
+        document.getElementById(
+          "loginPage"
+        ).style.display = "none";
+
+        document.getElementById(
+          "adminPage"
+        ).style.display = "block";
+
+        loadDashboard();
+
+      } else {
+
+        showMessage(
+          "loginMessage",
+          result.message ||
+          "Invalid login details.",
+          "error"
+        );
+
+      }
+
+    })
+
+    .withFailureHandler(function(error) {
+
+      showLoading(false);
+
+      showMessage(
+        "loginMessage",
+        "Login failed: " + error.message,
+        "error"
+      );
+
+    })
+
+    .checkAdminLogin(
+      username,
+      password
+    );
+
+}
+
+
+/* ============================================================
+   LOGOUT
+   ============================================================ */
+
+function logout() {
+
+  document.getElementById(
+    "adminPage"
+  ).style.display = "none";
+
+  document.getElementById(
+    "loginPage"
+  ).style.display = "flex";
+
+  document.getElementById(
+    "username"
+  ).value = "";
+
+  document.getElementById(
+    "password"
+  ).value = "";
+
+}
+
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+
+function showSection(sectionId, button) {
+
+  document
+    .querySelectorAll(".section")
+    .forEach(function(section) {
+
+      section.classList.remove("active");
+
+    });
+
+
+  document
+    .querySelectorAll(".sidebar button")
+    .forEach(function(btn) {
+
+      btn.classList.remove("active");
+
+    });
+
+
+  document
+    .getElementById(sectionId)
+    .classList.add("active");
+
+
+  if (button) {
+    button.classList.add("active");
+  }
+
+
+  if (sectionId === "dashboard") {
+    loadDashboard();
+  }
+
+  if (sectionId === "payments") {
+    loadPayments();
+  }
+
+  if (sectionId === "exhibitors") {
+    loadExhibitors();
+  }
+
+  if (sectionId === "visitors") {
+    loadVisitors();
+  }
+
+  if (sectionId === "booths") {
+    loadBooths();
+  }
+
+}
+
+
+/* ============================================================
+   DASHBOARD
+   ============================================================ */
+
+function loadDashboard() {
+
+  showLoading(true);
+
+  google.script.run
+
+    .withSuccessHandler(function(result) {
+
+      showLoading(false);
+
+      if (!result) {
+        return;
+      }
+
+      document.getElementById(
+        "totalPayments"
+      ).innerText =
+        result.totalPayments || 0;
+
+
+      document.getElementById(
+        "verifiedPayments"
+      ).innerText =
+        result.verifiedPayments || 0;
+
+
+      document.getElementById(
+        "pendingPayments"
+      ).innerText =
+        result.pendingPayments || 0;
+
+
+      document.getElementById(
+        "revenue"
+      ).innerText =
+        "KES " +
+        Number(
+          result.revenue || 0
+        ).toLocaleString();
+
+
+      document.getElementById(
+        "totalVisitors"
+      ).innerText =
+        result.totalVisitors || 0;
+
+
+      document.getElementById(
+        "checkedInVisitors"
+      ).innerText =
+        result.checkedInVisitors || 0;
+
+
+      document.getElementById(
+        "notCheckedInVisitors"
+      ).innerText =
+        result.notCheckedInVisitors || 0;
+
+    })
+
+    .withFailureHandler(function(error) {
+
+      showLoading(false);
+
+      alert(
+        "Could not load dashboard: " +
+        error.message
+      );
+
+    })
+
+    .getDashboardStats();
+
+}
+
+
+/* ============================================================
+   PAYMENTS
+   ============================================================ */
+
+function loadPayments() {
+
+  showLoading(true);
+
+  google.script.run
+
+    .withSuccessHandler(function(data) {
+
+      showLoading(false);
+
+      renderPaymentsTable(data);
+
+    })
+
+    .withFailureHandler(function(error) {
+
+      showLoading(false);
+
+      alert(
+        "Could not load payments: " +
+        error.message
+      );
+
+    })
+
+    .getPayments();
+
+}
+
+
+/* ============================================================
+   PAYMENT TABLE
+   ============================================================ */
+
+function renderPaymentsTable(data) {
+
+  var table =
+    document.getElementById("paymentsTable");
+
+  var thead =
+    table.querySelector("thead");
+
+  var tbody =
+    table.querySelector("tbody");
+
+  thead.innerHTML = "";
+  tbody.innerHTML = "";
+
+  if (!data || data.length === 0) {
+
+    tbody.innerHTML =
+      "<tr><td>No payments found.</td></tr>";
+
+    return;
+  }
+
+  var headers = data[0];
+
+  var headerRow =
+    document.createElement("tr");
+
+  headers.forEach(function(header, index) {
+
+    var th =
+      document.createElement("th");
+
+    if (index === 5) {
+
+      th.innerText =
+        "AMOUNT PAID";
+
+    } else {
+
+      th.innerText =
+        header;
+
+    }
+
+    headerRow.appendChild(th);
+
+  });
+
+
+  var actionHeader =
+    document.createElement("th");
+
+  actionHeader.innerText =
+    "ACTIONS";
+
+  headerRow.appendChild(
+    actionHeader
+  );
+
+  thead.appendChild(
+    headerRow
+  );
+
+
+  for (
+    var i = 1;
+    i < data.length;
+    i++
+  ) {
+
+    var row =
+      document.createElement("tr");
+
+
+    data[i].forEach(function(cell, index) {
+
+      var td =
+        document.createElement("td");
+
+      var value =
+        cell == null ? "" : cell;
+
+
+      if (index === 5) {
+
+        var amount =
+          Number(
+            String(value)
+              .replace(/,/g, "")
+              .replace(/KSh/gi, "")
+              .replace(/KES/gi, "")
+              .trim()
+          );
+
+
+        if (isNaN(amount)) {
+
+          td.innerHTML =
+            '<span class="amount-paid">' +
+            value +
+            '</span>';
+
+        } else {
+
+          td.innerHTML =
+            '<span class="amount-paid">' +
+            "KSh " +
+            amount.toLocaleString() +
+            '</span>';
+
+        }
+
+      }
+
+      else if (index === 8) {
+
+        var status =
+          String(value)
+            .trim()
+            .toLowerCase();
+
+
+        if (status === "verified") {
+
+          td.innerHTML =
+            '<span class="status verified">' +
+            value +
+            '</span>';
+
+        }
+
+        else if (
+          status === "pending verification"
+        ) {
+
+          td.innerHTML =
+            '<span class="status pending">' +
+            value +
+            '</span>';
+
+        }
+
+        else if (
+          status === "rejected"
+        ) {
+
+          td.innerHTML =
+            '<span class="status rejected">' +
+            value +
+            '</span>';
+
+        }
+
+        else {
+
+          td.innerText =
+            value;
+
+        }
+
+      }
+
+      else {
+
+        td.innerText =
+          value;
+
+      }
+
+
+      row.appendChild(td);
+
+    });
+
+
+    var actionTd =
+      document.createElement("td");
+
+
+    var paymentId =
+      data[i][0];
+
+
+    var currentStatus =
+      String(data[i][8] || "")
+        .trim()
+        .toLowerCase();
+
+
+    var actionContainer =
+      document.createElement("div");
+
+    actionContainer.className =
+      "action-buttons";
+
+
+    if (currentStatus !== "verified") {
+
+      var verifyButton =
+        document.createElement("button");
+
+      verifyButton.className =
+        "success-btn";
+
+      verifyButton.innerText =
+        "Verify";
+
+
+      verifyButton.onclick =
+        function(id, amount) {
+
+          return function() {
+
+            verifyPaymentAction(
+              id,
+              amount,
+              "Verified"
+            );
+
+          };
+
+        }(
+          paymentId,
+          data[i][5]
+        );
+
+
+      actionContainer.appendChild(
+        verifyButton
+      );
+
+
+      var rejectButton =
+        document.createElement("button");
+
+      rejectButton.className =
+        "danger-btn";
+
+      rejectButton.innerText =
+        "Reject";
+
+
+      rejectButton.onclick =
+        function(id, amount) {
+
+          return function() {
+
+            verifyPaymentAction(
+              id,
+              amount,
+              "Rejected"
+            );
+
+          };
+
+        }(
+          paymentId,
+          data[i][5]
+        );
+
+
+      actionContainer.appendChild(
+        rejectButton
+      );
+
+    }
+
+    else {
+
+      actionContainer.innerHTML =
+        '<span class="status verified">Verified</span>';
+
+    }
+
+
+    actionTd.appendChild(
+      actionContainer
+    );
+
+    row.appendChild(
+      actionTd
+    );
+
+    tbody.appendChild(
+      row
+    );
+
+  }
+
+}
+
+
+/* ============================================================
+   VERIFY / REJECT PAYMENT
+   ============================================================ */
+
+function verifyPaymentAction(
+  paymentId,
+  amount,
+  status
+) {
+
+  var amountDisplay =
+    String(amount || "")
+      .replace(/,/g, "");
+
+
+  if (!confirm(
+    "Payment ID: " +
+    paymentId +
+    "\n\n" +
+    "Amount Paid: KSh " +
+    Number(
+      amountDisplay || 0
+    ).toLocaleString() +
+    "\n\n" +
+    "Action: " +
+    status +
+    "\n\n" +
+    "Continue?"
+  )) {
+
+    return;
+  }
+
+
+  var verifiedBy =
+    prompt(
+      "Enter your name for the verification record:"
+    );
+
+
+  if (!verifiedBy) {
+    return;
+  }
+
+
+  showLoading(true);
+
+
+  google.script.run
+
+    .withSuccessHandler(function(result) {
+
+      showLoading(false);
+
+      alert(
+        result.message ||
+        "Payment updated."
+      );
+
+
+      if (result.success) {
+
+        loadPayments();
+        loadDashboard();
+
+      }
+
+    })
+
+    .withFailureHandler(function(error) {
+
+      showLoading(false);
+
+      alert(
+        "Payment verification failed: " +
+        error.message
+      );
+
+    })
+
+    .verifyPayment(
+      paymentId,
+      status,
+      verifiedBy
+    );
+
+}
+
+
+/* ============================================================
+   EXHIBITORS
+   ============================================================ */
+
+function loadExhibitors() {
+
+  showLoading(true);
+
+  google.script.run
+
+    .withSuccessHandler(function(data) {
+
+      showLoading(false);
+
+      renderSimpleTable(
+        "exhibitorsTable",
+        data
+      );
+
+    })
+
+    .withFailureHandler(function(error) {
+
+      showLoading(false);
+
+      alert(
+        "Could not load exhibitors: " +
+        error.message
+      );
+
+    })
+
+    .getExhibitors();
+
+}
+
+
+/* ============================================================
+   VISITORS
+   ============================================================ */
+
+function loadVisitors() {
+
+  showLoading(true);
+
+  google.script.run
+
+    .withSuccessHandler(function(data) {
+
+      showLoading(false);
+
+      renderSimpleTable(
+        "visitorsTable",
+        data
+      );
+
+    })
+
+    .withFailureHandler(function(error) {
+
+      showLoading(false);
+
+      renderSimpleTable(
+        "visitorsTable",
+        []
+      );
+
+      alert(
+        "Could not load visitors: " +
+        error.message
+      );
+
+    })
+
+    .getVisitors();
+
+}
+
+
+/* ============================================================
+   BOOTHS
+   ============================================================ */
+
+function loadBooths() {
+
+  showLoading(true);
+
+  google.script.run
+
+    .withSuccessHandler(function(data) {
+
+      showLoading(false);
+
+      renderSimpleTable(
+        "boothsTable",
+        data
+      );
+
+    })
+
+    .withFailureHandler(function(error) {
+
+      showLoading(false);
+
+      alert(
+        "Could not load booths: " +
+        error.message
+      );
+
+    })
+
+    .getBooths();
+
+}
+
+
+/* ============================================================
+   SIMPLE TABLE
+   ============================================================ */
+
+function renderSimpleTable(
+  tableId,
+  data
+) {
+
+  var table =
+    document.getElementById(tableId);
+
+  if (!table) {
+    return;
+  }
+
+
+  var thead =
+    table.querySelector("thead");
+
+  var tbody =
+    table.querySelector("tbody");
+
+  thead.innerHTML = "";
+  tbody.innerHTML = "";
+
+
+  if (!data || data.length === 0) {
+
+    tbody.innerHTML =
+      "<tr><td>No records found.</td></tr>";
+
+    return;
+  }
+
+
+  var headerRow =
+    document.createElement("tr");
+
+
+  data[0].forEach(function(header) {
+
+    var th =
+      document.createElement("th");
+
+    th.innerText =
+      header;
+
+    headerRow.appendChild(
+      th
+    );
+
+  });
+
+
+  thead.appendChild(
+    headerRow
+  );
+
+
+  for (
+    var i = 1;
+    i < data.length;
+    i++
+  ) {
+
+    var row =
+      document.createElement("tr");
+
+
+    data[i].forEach(function(cell) {
+
+      var td =
+        document.createElement("td");
+
+      td.innerText =
+        cell || "";
+
+      row.appendChild(
+        td
+      );
+
+    });
+
+
+    tbody.appendChild(
+      row
+    );
+
+  }
+
+}
+
+
+/* ============================================================
+   CHECK-IN — MANUAL SEARCH
+   ============================================================ */
+
+function searchExhibitorForCheckIn() {
+
+  var exhibitorId =
+    document.getElementById(
+      "checkinExhibitorId"
+    ).value.trim();
+
+
+  if (!exhibitorId) {
+
+    alert(
+      "Please enter Exhibitor ID."
+    );
+
+    return;
+  }
+
+
+  showLoading(true);
+
+
+  google.script.run
+
+    .withSuccessHandler(function(result) {
+
+      showLoading(false);
+
+
+      var box =
+        document.getElementById(
+          "exhibitorCheckinResult"
+        );
+
+
+      if (result && result.success) {
+
+        box.innerHTML =
+
+          "<div class='panel'>" +
+
+          "<strong>" +
+          escapeHTML(
+            result.exhibitorName || ""
+          ) +
+          "</strong><br><br>" +
+
+          "Exhibitor ID: " +
+          escapeHTML(
+            result.exhibitorId || ""
+          ) +
+          "<br>" +
+
+          "Booth: " +
+          escapeHTML(
+            result.boothNumber ||
+            "Not Assigned"
+          ) +
+          "<br>" +
+
+          "Payment Status: " +
+          escapeHTML(
+            result.paymentStatus || ""
+          ) +
+
+          "<br><br>" +
+
+          "<button class='success-btn' " +
+          "onclick='checkInExhibitor()'>" +
+
+          "Check In Exhibitor" +
+
+          "</button>" +
+
+          "</div>";
+
+      }
+
+      else {
+
+        box.innerHTML =
+
+          "<div class='message error' " +
+          "style='display:block'>" +
+
+          escapeHTML(
+            result.message ||
+            "Exhibitor not found."
+          ) +
+
+          "</div>";
+
+      }
+
+    })
+
+    .withFailureHandler(function(error) {
+
+      showLoading(false);
+
+      alert(
+        "Search failed: " +
+        error.message
+      );
+
+    })
+
+    .getExhibitorForCheckIn(
+      exhibitorId
+    );
+
+}
+
+
+/* ============================================================
+   CHECK IN EXHIBITOR
+   ============================================================ */
+
+function checkInExhibitor() {
+
+  var exhibitorId =
+    document.getElementById(
+      "checkinExhibitorId"
+    ).value.trim();
+
+
+  var staffName =
+    document.getElementById(
+      "staffName"
+    ).value.trim();
+
+
+  if (!exhibitorId) {
+
+    alert(
+      "Enter Exhibitor ID."
+    );
+
+    return;
+  }
+
+
+  if (!staffName) {
+
+    alert(
+      "Enter Staff Name."
+    );
+
+    return;
+  }
+
+
+  showLoading(true);
+
+
+  google.script.run
+
+    .withSuccessHandler(function(result) {
+
+      showLoading(false);
+
+      alert(
+        result.message ||
+        "Check-in complete."
+      );
+
+      if (
+        result &&
+        result.success
+      ) {
+
+        searchExhibitorForCheckIn();
+
+      }
+
+    })
+
+    .withFailureHandler(function(error) {
+
+      showLoading(false);
+
+      alert(
+        "Check-in failed: " +
+        error.message
+      );
+
+    })
+
+    .checkInExhibitor(
+      exhibitorId,
+      staffName
+    );
+
+}
+
+
+/* ============================================================
+   ASSIGN BOOTH
+   ============================================================ */
+
+function assignBooth() {
+
+  var boothNumber =
+    document.getElementById(
+      "boothNumber"
+    ).value.trim();
+
+
+  var exhibitorId =
+    document.getElementById(
+      "boothExhibitorId"
+    ).value.trim();
+
+
+  if (
+    !boothNumber ||
+    !exhibitorId
+  ) {
+
+    showMessage(
+      "boothMessage",
+      "Enter Booth Number and Exhibitor ID.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  showLoading(true);
+
+
+  google.script.run
+
+    .withSuccessHandler(function(result) {
+
+      showLoading(false);
+
+
+      showMessage(
+        "boothMessage",
+        result.message ||
+        "Booth assignment complete.",
+        result.success
+          ? "success"
+          : "error"
+      );
+
+
+      if (result.success) {
+
+        loadBooths();
+
+      }
+
+    })
+
+    .withFailureHandler(function(error) {
+
+      showLoading(false);
+
+      showMessage(
+        "boothMessage",
+        error.message,
+        "error"
+      );
+
+    })
+
+    .assignBooth(
+      boothNumber,
+      exhibitorId
+    );
+
+}
+
+
+/* ============================================================
+   RECEIPT
+   ============================================================ */
+
+function loadReceipt() {
+
+  var paymentId =
+    document.getElementById(
+      "receiptPaymentId"
+    ).value.trim();
+
+
+  if (!paymentId) {
+
+    alert(
+      "Enter Payment ID."
+    );
+
+    return;
+  }
+
+
+  showLoading(true);
+
+
+  google.script.run
+
+    .withSuccessHandler(function(result) {
+
+      showLoading(false);
+
+
+      var box =
+        document.getElementById(
+          "receiptResult"
+        );
+
+
+      if (
+        result &&
+        result.success
+      ) {
+
+        box.innerHTML =
+
+          "<div class='panel'>" +
+
+          "<h3>Payment Receipt</h3>" +
+
+          "<p><strong>Payment ID:</strong> " +
+          escapeHTML(
+            result.paymentId || ""
+          ) +
+          "</p>" +
+
+          "<p><strong>Amount Paid:</strong> " +
+          "KSh " +
+          Number(
+            result.amount || 0
+          ).toLocaleString() +
+          "</p>" +
+
+          "<p><strong>Status:</strong> " +
+          escapeHTML(
+            result.status || ""
+          ) +
+          "</p>" +
+
+          "</div>";
+
+      }
+
+      else {
+
+        box.innerHTML =
+
+          "<div class='message error' " +
+          "style='display:block'>" +
+
+          escapeHTML(
+            result.message ||
+            "Receipt not found."
+          ) +
+
+          "</div>";
+
+      }
+
+    })
+
+    .withFailureHandler(function(error) {
+
+      showLoading(false);
+
+      alert(
+        "Could not load receipt: " +
+        error.message
+      );
+
+    })
+
+    .getExhibitorReceipt(
+      paymentId
+    );
+
+}
+
+
+/* ============================================================
+   VERIFY EXHIBITOR QR
+   ============================================================ */
+
+function verifyExhibitorQRFromAdmin() {
+
+  var qrValue =
+    document
+      .getElementById(
+        "checkinExhibitorId"
+      )
+      .value
+      .trim();
+
+
+  if (!qrValue) {
+
+    alert(
+      "Please enter an Exhibitor ID or scan a QR code."
+    );
+
+    return;
+  }
+
+
+  showLoading(true);
+
+
+  google.script.run
+
+    .withSuccessHandler(function(result) {
+
+      showLoading(false);
+
+
+      if (
+        !result ||
+        !result.success
+      ) {
+
+        document
+          .getElementById(
+            "exhibitorCheckinResult"
+          )
+          .innerHTML =
+
+            "<div class='error-message'>" +
+
+            escapeHTML(
+              result && result.message
+                ? result.message
+                : "Exhibitor could not be verified."
+            ) +
+
+            "</div>";
+
+        return;
+      }
+
+
+      displayQRExhibitorResult(
+        result.exhibitor
+      );
+
+    })
+
+    .withFailureHandler(function(error) {
+
+      showLoading(false);
+
+      alert(
+        "QR verification failed: " +
+        error.message
+      );
+
+    })
+
+    .verifyExhibitorQR(
+      qrValue
+    );
+
+}
+
+
+/* ============================================================
+   DISPLAY QR EXHIBITOR RESULT
+   ============================================================ */
+
+function displayQRExhibitorResult(
+  exhibitor
+) {
+
+  var paymentStatus =
+    exhibitor.paymentStatus ||
+    "Not Available";
+
+
+  var checkInStatus =
+    exhibitor.checkInStatus ||
+    "Not Checked In";
+
+
+  var boothNumber =
+    exhibitor.boothNumber ||
+    "Not Assigned";
+
+
+  var paymentClass =
+    String(paymentStatus)
+      .toLowerCase() === "verified"
+        ? "success-message"
+        : "warning-message";
+
+
+  document
+    .getElementById(
+      "exhibitorCheckinResult"
+    )
+    .innerHTML =
+
+      "<div class='card' style='margin-top:10px;'>" +
+
+      "<h3>Exhibitor Found</h3>" +
+
+      "<p><strong>Exhibitor ID:</strong> " +
+      escapeHTML(
+        exhibitor.exhibitorId
+      ) +
+      "</p>" +
+
+      "<p><strong>Name:</strong> " +
+      escapeHTML(
+        exhibitor.fullName
+      ) +
+      "</p>" +
+
+      "<p><strong>Business:</strong> " +
+      escapeHTML(
+        exhibitor.businessName ||
+        "Not Provided"
+      ) +
+      "</p>" +
+
+      "<p><strong>Exhibitor Type:</strong> " +
+      escapeHTML(
+        exhibitor.exhibitorType ||
+        "Not Provided"
+      ) +
+      "</p>" +
+
+      "<p><strong>Amount Paid:</strong> KES " +
+      escapeHTML(
+        String(
+          exhibitor.amountPaid ||
+          "0"
+        )
+      ) +
+      "</p>" +
+
+      "<p><strong>Payment Status:</strong> " +
+
+      "<span class='" +
+      paymentClass +
+      "'>" +
+
+      escapeHTML(
+        paymentStatus
+      ) +
+
+      "</span></p>" +
+
+      "<p><strong>Booth:</strong> " +
+      escapeHTML(
+        boothNumber
+      ) +
+      "</p>" +
+
+      "<p><strong>Check-In:</strong> " +
+      escapeHTML(
+        checkInStatus
+      ) +
+      "</p>" +
+
+      "<div style='margin-top:15px;'>" +
+
+      "<button " +
+      "class='success-btn' " +
+      "onclick='checkInExhibitorFromQR()'>" +
+
+      "✅ Check In Exhibitor" +
+
+      "</button>" +
+
+      "</div>" +
+
+      "</div>";
+
+}
+
+
+/* ============================================================
+   CHECK IN FROM QR
+   ============================================================ */
+
+function checkInExhibitorFromQR() {
+
+  var exhibitorId =
+    document
+      .getElementById(
+        "checkinExhibitorId"
+      )
+      .value
+      .trim();
+
+
+  var staffName =
+    document
+      .getElementById(
+        "staffName"
+      )
+      .value
+      .trim();
+
+
+  if (!exhibitorId) {
+
+    alert(
+      "Enter the Exhibitor ID first."
+    );
+
+    return;
+  }
+
+
+  if (!staffName) {
+
+    alert(
+      "Enter the staff name."
+    );
+
+    return;
+  }
+
+
+  showLoading(true);
+
+
+  google.script.run
+
+    .withSuccessHandler(function(result) {
+
+      showLoading(false);
+
+
+      if (
+        !result ||
+        !result.success
+      ) {
+
+        alert(
+          result && result.message
+            ? result.message
+            : "Check-in failed."
+        );
+
+        return;
+      }
+
+
+      alert(
+        "✅ Exhibitor checked in successfully!"
+      );
+
+
+      verifyExhibitorQRFromAdmin();
+
+
+    })
+
+    .withFailureHandler(function(error) {
+
+      showLoading(false);
+
+      alert(
+        "Check-in error: " +
+        error.message
+      );
+
+    })
+
+    .checkInExhibitorByQR(
+      exhibitorId,
+      staffName
+    );
+
+}
+
+
+/* ============================================================
+   GENERATE BADGE
+   ============================================================ */
+
+function generateBadgeFromAdmin() {
+
+  var exhibitorId =
+    document
+      .getElementById(
+        "checkinExhibitorId"
+      )
+      .value
+      .trim();
+
+
+  if (!exhibitorId) {
+
+    alert(
+      "Please enter an Exhibitor ID."
+    );
+
+    return;
+  }
+
+
+  showLoading(true);
+
+
+  google.script.run
+
+    .withSuccessHandler(function(result) {
+
+      showLoading(false);
+
+
+      if (
+        !result ||
+        !result.success
+      ) {
+
+        document
+          .getElementById(
+            "badgeResult"
+          )
+          .innerHTML =
+
+            "<div class='error-message'>" +
+
+            escapeHTML(
+              result && result.message
+                ? result.message
+                : "Unable to generate badge."
+            ) +
+
+            "</div>";
+
+        return;
+      }
+
+
+      displayExhibitorBadge(
+        result
+      );
+
+    })
+
+    .withFailureHandler(function(error) {
+
+      showLoading(false);
+
+      alert(
+        "Badge generation failed: " +
+        error.message
+      );
+
+    })
+
+    .getExhibitorBadge(
+      exhibitorId
+    );
+
+}
+
+
+/* ============================================================
+   DISPLAY BADGE
+   ============================================================ */
+
+function displayExhibitorBadge(
+  badge
+) {
+
+  var badgeHTML =
+
+    "<div id='printableExhibitorBadge' " +
+
+    "style='" +
+
+    "width:360px;" +
+    "max-width:100%;" +
+    "margin:20px auto;" +
+    "padding:25px;" +
+    "border:3px solid #111;" +
+    "border-radius:15px;" +
+    "background:#fff;" +
+    "text-align:center;" +
+    "font-family:Arial,sans-serif;" +
+    "box-sizing:border-box;" +
+
+    "'>" +
+
+    "<div style='font-size:24px;font-weight:bold;'>" +
+
+    "NEXTGEN EXPO 2026" +
+
+    "</div>" +
+
+    "<div style='font-size:14px;margin-top:5px;'>" +
+
+    "EXHIBITOR BADGE" +
+
+    "</div>" +
+
+    "<hr>" +
+
+    "<div style='font-size:22px;font-weight:bold;margin:12px 0;'>" +
+
+    escapeHTML(
+      badge.fullName
+    ) +
+
+    "</div>" +
+
+    "<div style='font-size:17px;font-weight:bold;'>" +
+
+    escapeHTML(
+      badge.businessName ||
+      ""
+    ) +
+
+    "</div>" +
+
+    "<div style='margin-top:8px;'>" +
+
+    escapeHTML(
+      badge.exhibitorType ||
+      ""
+    ) +
+
+    "</div>" +
+
+    "<div style='margin-top:8px;'>" +
+
+    "<strong>Booth:</strong> " +
+
+    escapeHTML(
+      badge.boothNumber ||
+      "Not Assigned"
+    ) +
+
+    "</div>" +
+
+    "<div style='margin-top:15px;'>" +
+
+    "<img " +
+
+    "src='" +
+    badge.qrImageUrl +
+    "' " +
+
+    "alt='Exhibitor QR Code' " +
+
+    "style='width:200px;height:200px;' " +
+
+    "/>" +
+
+    "</div>" +
+
+    "<div style='font-size:13px;margin-top:8px;'>" +
+
+    "Scan to verify exhibitor" +
+
+    "</div>" +
+
+    "<div style='font-size:14px;margin-top:10px;word-break:break-all;'>" +
+
+    "<strong>ID:</strong> " +
+
+    escapeHTML(
+      badge.exhibitorId
+    ) +
+
+    "</div>" +
+
+    "<div style='font-size:12px;margin-top:15px;'>" +
+
+    "14–15 August 2026<br>" +
+    "Jericho Market Parking Area, Nairobi<br>" +
+    "9:00 AM – 5:00 PM" +
+
+    "</div>" +
+
+    "</div>" +
+
+    "<div style='text-align:center;margin-top:15px;'>" +
+
+    "<button " +
+
+    "class='primary-btn' " +
+
+    "onclick='printExhibitorBadge()'>" +
+
+    "🖨️ Print Badge" +
+
+    "</button>" +
+
+    "</div>";
+
+
+  document
+    .getElementById(
+      "badgeResult"
+    )
+    .innerHTML =
+      badgeHTML;
+
+}
+
+
+/* ============================================================
+   PRINT BADGE
+   ============================================================ */
+
+function printExhibitorBadge() {
+
+  var badge =
+    document.getElementById(
+      "printableExhibitorBadge"
+    );
+
+
+  if (!badge) {
+
+    alert(
+      "Generate the badge first."
+    );
+
+    return;
+  }
+
+
+  var printWindow =
+    window.open(
+      "",
+      "_blank",
+      "width=600,height=800"
+    );
+
+
+  printWindow.document.write(
+
+    "<html>" +
+
+    "<head>" +
+
+    "<title>NextGen Expo Exhibitor Badge</title>" +
+
+    "<style>" +
+
+    "body{" +
+    "margin:0;" +
+    "padding:20px;" +
+    "font-family:Arial,sans-serif;" +
+    "}" +
+
+    "@media print{" +
+    "body{padding:0;}" +
+    "button{display:none;}" +
+    "}" +
+
+    "</style>" +
+
+    "</head>" +
+
+    "<body>" +
+
+    badge.outerHTML +
+
+    "</body>" +
+
+    "</html>"
+
+  );
+
+
+  printWindow.document.close();
+
+  printWindow.focus();
+
+
+  setTimeout(
+    function() {
+
+      printWindow.print();
+
+    },
+    500
+  );
+
+}
+
+
+/* ============================================================
+   PHONE CAMERA QR SCANNER
+   ============================================================ */
+
+var exhibitorQRScanner = null;
+var qrScannerRunning = false;
+
+
+/* ============================================================
+   START QR SCANNER
+   ============================================================ */
+
+function startExhibitorQRScanner() {
+
+  var scannerElement =
+    document.getElementById(
+      "exhibitorQRScanner"
+    );
+
+
+  var statusElement =
+    document.getElementById(
+      "qrScannerStatus"
+    );
+
+
+  if (!scannerElement) {
+
+    alert(
+      "QR scanner area was not found."
+    );
+
+    return;
+  }
+
+
+  if (
+    typeof Html5Qrcode ===
+    "undefined"
+  ) {
+
+    alert(
+      "QR scanner library has not loaded. Refresh the page and try again."
+    );
+
+    return;
+  }
+
+
+  if (qrScannerRunning) {
+    return;
+  }
+
+
+  scannerElement.innerHTML = "";
+
+
+  statusElement.innerHTML =
+    "📷 Starting camera...";
+
+
+  document
+    .getElementById(
+      "stopQRScannerButton"
+    )
+    .style.display =
+      "inline-block";
+
+
+  exhibitorQRScanner =
+    new Html5Qrcode(
+      "exhibitorQRScanner"
+    );
+
+
+  var config = {
+
+    fps: 10,
+
+    qrbox: function(
+      viewfinderWidth,
+      viewfinderHeight
+    ) {
+
+      var size =
+        Math.min(
+          viewfinderWidth,
+          viewfinderHeight
+        ) * 0.7;
+
+
+      return {
+        width: size,
+        height: size
+      };
+
+    },
+
+    aspectRatio: 1.0
+
+  };
+
+
+  exhibitorQRScanner
+
+    .start(
+
+      {
+        facingMode: "environment"
+      },
+
+      config,
+
+      function(decodedText) {
+
+        onExhibitorQRScanned(
+          decodedText
+        );
+
+      },
+
+      function(errorMessage) {
+
+        // Normal QR scanning errors are ignored.
+
+      }
+
+    )
+
+    .then(function() {
+
+      qrScannerRunning =
+        true;
+
+
+      statusElement.innerHTML =
+        "📷 Camera active — point it at the exhibitor QR code.";
+
+    })
+
+    .catch(function(error) {
+
+      qrScannerRunning =
+        false;
+
+
+      statusElement.innerHTML =
+        "";
+
+
+      document
+        .getElementById(
+          "stopQRScannerButton"
+        )
+        .style.display =
+          "none";
+
+
+      alert(
+        "Unable to access the camera. " +
+        "Please allow camera permission.\n\n" +
+        error
+      );
+
+    });
+
+}
+
+
+/* ============================================================
+   QR CODE FOUND
+   ============================================================ */
+
+function onExhibitorQRScanned(
+  decodedText
+) {
+
+  decodedText =
+    String(
+      decodedText || ""
+    ).trim();
+
+
+  if (!decodedText) {
+    return;
+  }
+
+
+  stopExhibitorQRScanner();
+
+
+  var input =
+    document.getElementById(
+      "checkinExhibitorId"
+    );
+
+
+  if (input) {
+
+    input.value =
+      decodedText;
+
+  }
+
+
+  var statusElement =
+    document.getElementById(
+      "qrScannerStatus"
+    );
+
+
+  if (statusElement) {
+
+    statusElement.innerHTML =
+      "✅ QR code scanned. Verifying exhibitor...";
+
+  }
+
+
+  verifyExhibitorQRFromAdmin();
+
+}
+
+
+/* ============================================================
+   STOP QR SCANNER
+   ============================================================ */
+
+function stopExhibitorQRScanner() {
+
+  var button =
+    document.getElementById(
+      "stopQRScannerButton"
+    );
+
+
+  if (button) {
+
+    button.style.display =
+      "none";
+
+  }
+
+
+  var statusElement =
+    document.getElementById(
+      "qrScannerStatus"
+    );
+
+
+  if (exhibitorQRScanner) {
+
+    if (qrScannerRunning) {
+
+      exhibitorQRScanner
+        .stop()
+
+        .then(function() {
+
+          qrScannerRunning =
+            false;
+
+          exhibitorQRScanner =
+            null;
+
+
+          if (statusElement) {
+
+            statusElement.innerHTML =
+              "Scanner stopped.";
+
+          }
+
+        })
+
+        .catch(function() {
+
+          qrScannerRunning =
+            false;
+
+          exhibitorQRScanner =
+            null;
+
+        });
+
+    }
+
+    else {
+
+      exhibitorQRScanner =
+        null;
+
+    }
+
+  }
+
+  else {
+
+    qrScannerRunning =
+      false;
+
+  }
+
+}
+
+
+/* ============================================================
+   MESSAGE
+   ============================================================ */
+
+function showMessage(
+  elementId,
+  message,
+  type
+) {
+
+  var element =
+    document.getElementById(
+      elementId
+    );
+
+
+  if (!element) {
+    return;
+  }
+
+
+  element.innerText =
+    message;
+
+
+  element.className =
+    "message " +
+    type;
+
+
+  element.style.display =
+    "block";
+
+}
+
+
+/* ============================================================
+   LOADING
+   ============================================================ */
+
+function showLoading(
+  show
+) {
+
+  document.getElementById(
+    "loading"
+  ).style.display =
+    show
+      ? "flex"
+      : "none";
+
+}
+
+
+/* ============================================================
+   SAFE HTML ESCAPE
+   ============================================================ */
+
+function escapeHTML(
+  value
+) {
+
+  return String(
+    value == null
+      ? ""
+      : value
+  )
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* ============================================================
+   INITIAL LOAD
+   ============================================================ */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    document.getElementById(
+      "loginPage"
+    ).style.display =
+      "flex";
+
+
+    document.getElementById(
+      "adminPage"
+    ).style.display =
+      "none";
+
+  }
+);
+
+</script>
+
+</body>
+</html>
