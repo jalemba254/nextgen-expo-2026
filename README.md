@@ -7,7 +7,7 @@ NextGen Expo 2026 is an event management system developed using Google Apps Scri
 
 ## Dashboard Preview
 
-![NextGen Expo Admin Dashboard](nextgen-dashboard.png)
+![NextGen Expo Admin Dashboard](nextgen2026.png)
 
 
 ## Key Features
