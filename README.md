@@ -4,6 +4,12 @@
 
 NextGen Expo 2026 is an event management system developed using Google Apps Script, Google Sheets, and HTML. It is designed to support exhibitor registration, payment tracking, administrative operations, and payment receipt generation.
 
+
+## Dashboard Preview
+
+![NextGen Expo Admin Dashboard](nextgen-dashboard.png)
+
+
 ## Key Features
 
 - **Exhibitor Registration:** Collects and manages exhibitor registration information.
