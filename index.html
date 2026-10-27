@@ -1,0 +1,1939 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NextGen Expo 2026 - Exhibitor Registration</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f9;
+      color: #222;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 850px;
+      margin: 30px auto;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.10);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #061b5c, #123c9c);
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    .header h1 {
+      margin: 0 0 10px;
+      font-size: 30px;
+    }
+
+    .header p {
+      margin: 5px 0;
+    }
+
+    .content {
+      padding: 25px;
+    }
+
+    .section {
+      margin-bottom: 30px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      background: #fafafa;
+    }
+
+    .section h2,
+    .section h3 {
+      margin-top: 0;
+      color: #123c9c;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 15px;
+      margin-bottom: 7px;
+    }
+
+    .required {
+      color: red;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #bbb;
+      border-radius: 7px;
+      font-size: 15px;
+      background: white;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #123c9c;
+      box-shadow: 0 0 4px rgba(18,60,156,0.25);
+    }
+
+    .help-text {
+      display: block;
+      margin-top: 6px;
+      color: #666;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .premium-description {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      background: #fff8e1;
+      border-left: 4px solid #f0b400;
+      border-radius: 6px;
+    }
+
+    .payment-amount {
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+
+    #displayFee {
+      color: #123c9c;
+      font-size: 24px;
+    }
+
+    .payment-instructions {
+      background: #eef4ff;
+      padding: 18px;
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+
+    .mpesa-number {
+      text-align: center;
+      font-size: 25px;
+      font-weight: bold;
+      color: #008000;
+      margin: 15px 0;
+    }
+
+    .optional-box {
+      background: #f1f1f1;
+      padding: 12px;
+      border-radius: 7px;
+      margin-top: 8px;
+      font-size: 13px;
+      color: #555;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 8px;
+      background: #123c9c;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    button:hover {
+      background: #061b5c;
+    }
+
+    button:disabled {
+      background: #999;
+      cursor: not-allowed;
+    }
+
+    .success-message,
+    .error-message,
+    .lookup-message {
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 8px;
+      display: none;
+      line-height: 1.6;
+    }
+
+    .success-message {
+      background: #e7f7ed;
+      color: #126b36;
+      border: 1px solid #9bd5b1;
+    }
+
+    .error-message {
+      background: #fdeaea;
+      color: #a40000;
+      border: 1px solid #e5aaaa;
+    }
+
+    .lookup-message {
+      background: #eef4ff;
+      color: #123c9c;
+      border: 1px solid #b8c9ed;
+    }
+
+    .receipt-result {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      background: #f8f8f8;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+    }
+
+    .receipt-result h3 {
+      color: #123c9c;
+    }
+
+    .receipt-result p {
+      margin: 8px 0;
+    }
+
+    .receipt-link {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 12px 18px;
+      background: #123c9c;
+      color: white;
+      text-decoration: none;
+      border-radius: 7px;
+    }
+
+    .receipt-link:hover {
+      background: #061b5c;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px;
+      background: #061b5c;
+      color: white;
+      font-size: 13px;
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      margin-top: 15px;
+      color: #123c9c;
+      font-weight: bold;
+    }
+
+    .info-box {
+      padding: 15px;
+      background: #fff8e1;
+      border-left: 4px solid #f0b400;
+      border-radius: 6px;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    @media (max-width: 600px) {
+
+      .container {
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+      }
+
+      .content {
+        padding: 15px;
+      }
+
+      .section {
+        padding: 15px;
+      }
+
+      .header h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- ======================================================
+       HEADER
+       ====================================================== -->
+
+  <div class="header">
+
+    <h1>NEXTGEN EXPO 2026</h1>
+
+    <p><strong>Exhibitor Registration</strong></p>
+
+    <p>14-15 August 2026</p>
+
+    <p>Jericho Market, Nairobi</p>
+
+    <p>9:00 AM - 5:00 PM</p>
+
+  </div>
+
+
+  <div class="content">
+
+
+    <!-- ====================================================
+         REGISTRATION FORM
+         ==================================================== -->
+
+    <div class="section">
+
+      <h2>📝 Exhibitor Registration</h2>
+
+      <div class="info-box">
+
+        <strong>Important:</strong>
+
+        The exhibition payment amount is based on the amount
+        agreed upon with the NextGen Expo administration.
+
+        Enter the <strong>actual amount you paid</strong>
+        below.
+
+      </div>
+
+
+      <!-- FULL NAME -->
+
+      <label>
+        Full Name
+        <span class="required">*</span>
+      </label>
+
+      <input
+        id="fullName"
+        type="text"
+        placeholder="Enter your full name"
+      >
+
+
+      <!-- PHONE -->
+
+      <label>
+        Phone Number
+        <span class="required">*</span>
+      </label>
+
+      <input
+        id="phone"
+        type="tel"
+        placeholder="Enter your phone number"
+      >
+
+
+      <!-- EMAIL -->
+
+      <label>
+        Email Address
+        <span class="required">*</span>
+      </label>
+
+      <input
+        id="email"
+        type="email"
+        placeholder="Enter your email address"
+      >
+
+
+      <!-- CATEGORY -->
+
+      <label>
+        Business Category
+        <span class="required">*</span>
+      </label>
+
+      <select id="category">
+
+        <option value="">
+          Select Category
+        </option>
+
+        <option value="Fashion">
+          Fashion
+        </option>
+
+        <option value="Food">
+          Food
+        </option>
+
+        <option value="Technology">
+          Technology
+        </option>
+
+        <option value="Beauty">
+          Beauty
+        </option>
+
+        <option value="Agriculture">
+          Agriculture
+        </option>
+
+        <option value="Education">
+          Education
+        </option>
+
+        <option value="Health">
+          Health
+        </option>
+
+        <option value="Finance">
+          Finance
+        </option>
+
+        <option value="Other">
+          Other
+        </option>
+
+      </select>
+
+
+      <!-- BUSINESS NAME -->
+
+      <label>
+        Business Name
+        <span class="required">*</span>
+      </label>
+
+      <input
+        id="businessName"
+        type="text"
+        placeholder="Enter your business name"
+      >
+
+
+      <!-- ==================================================
+           EXHIBITION SPACE
+           ================================================== -->
+
+      <h3 style="margin-top:30px;">
+        Choose Your Exhibition Space
+      </h3>
+
+
+      <label>
+        Exhibitor Type
+        <span class="required">*</span>
+      </label>
+
+      <select
+        id="exhibitorType"
+        onchange="updateSpaceType()"
+      >
+
+        <option value="">
+          Select Exhibitor Type
+        </option>
+
+        <option value="Standard Exhibitor">
+          Standard Exhibitor
+        </option>
+
+        <option value="Premium Exhibition Space">
+          Premium Exhibition Space
+        </option>
+
+      </select>
+
+
+      <span class="help-text">
+
+        Select the type of exhibition space you are requesting.
+
+        The amount paid can be any amount agreed upon with the
+        NextGen Expo administration.
+
+      </span>
+
+
+      <!-- PREMIUM SPACE DESCRIPTION -->
+
+      <div
+        id="premiumDescriptionBox"
+        class="premium-description"
+      >
+
+        <label>
+          Premium Space Description
+          <span class="required">*</span>
+        </label>
+
+        <textarea
+          id="spaceDescription"
+          placeholder="Describe the type of space you require, for example: Outdoor food court space, large product display area, vehicle display space, tent space, etc."
+        ></textarea>
+
+        <span class="help-text">
+
+          The NextGen Expo administration will review your
+          requested space and record the final space allocation.
+
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- ====================================================
+         M-PESA PAYMENT
+         ==================================================== -->
+
+    <div class="section">
+
+      <h3>📱 M-PESA PAYMENT</h3>
+
+
+      <p class="payment-amount">
+
+        Amount Paid:
+
+        <span id="displayFee">
+          Enter Your Amount Below
+        </span>
+
+      </p>
+
+
+      <div class="payment-instructions">
+
+        <p>
+          <strong>1.</strong>
+          Open M-Pesa on your phone.
+        </p>
+
+        <p>
+          <strong>2.</strong>
+          Select <strong>Send Money</strong>.
+        </p>
+
+        <p>
+          <strong>3.</strong>
+          Send the amount agreed upon with the
+          NextGen Expo administration to:
+        </p>
+
+        <p class="mpesa-number">
+          0745643762
+        </p>
+
+        <p style="text-align:center;">
+
+          Recipient Name:
+          <strong>FATMA AMBA</strong>
+
+        </p>
+
+        <p>
+
+          <strong>4.</strong>
+
+          After payment, enter the exact amount you paid
+          and your M-Pesa transaction code below.
+
+        </p>
+
+      </div>
+
+
+      <!-- AMOUNT PAID -->
+
+      <label>
+        Amount Paid (KES)
+        <span class="required">*</span>
+      </label>
+
+      <input
+        id="amountPaid"
+        type="number"
+        min="1"
+        step="1"
+        placeholder="Enter the exact amount you paid"
+        oninput="updateDisplayedAmount()"
+      >
+
+      <span class="help-text">
+
+        Enter the actual amount you paid. There is no fixed
+        KES 700 or KES 5,000 requirement on this form.
+
+      </span>
+
+
+      <!-- MPESA CODE -->
+
+      <label>
+        M-Pesa Transaction Code
+        <span class="required">*</span>
+      </label>
+
+      <input
+        id="mpesaCode"
+        type="text"
+        placeholder="Enter M-Pesa transaction code"
+      >
+
+      <span class="help-text">
+
+        Example: QWE123ABC456
+
+      </span>
+
+    </div>
+
+
+    <!-- ====================================================
+         RECEIPT UPLOAD - OPTIONAL
+         ==================================================== -->
+
+    <div class="section">
+
+      <h3>📎 Upload M-Pesa Payment Receipt</h3>
+
+      <p>
+
+        You may upload a screenshot or image showing your
+        M-Pesa payment confirmation.
+
+      </p>
+
+      <label>
+        Payment Receipt
+        <span style="color:#777;">
+          (Optional)
+        </span>
+      </label>
+
+      <input
+        id="receiptFile"
+        type="file"
+        accept=".jpg,.jpeg,.png,image/jpeg,image/png"
+      >
+
+      <div class="optional-box">
+
+        <strong>Optional:</strong>
+
+        You can submit your registration without uploading
+        a payment receipt. Your M-Pesa transaction code and
+        amount paid will still be recorded for verification.
+
+      </div>
+
+      <span class="help-text">
+
+        Accepted formats: JPG, JPEG, PNG.
+        Maximum file size: 5 MB.
+
+      </span>
+
+    </div>
+
+
+    <!-- ====================================================
+         SUBMIT
+         ==================================================== -->
+
+    <div class="section">
+
+      <button
+        id="submitButton"
+        type="button"
+        onclick="register()"
+      >
+
+        Submit Exhibitor Registration
+
+      </button>
+
+
+      <div
+        id="loading"
+        class="loading"
+      >
+
+        Processing registration...
+        Please wait.
+
+      </div>
+
+
+      <div
+        id="successMessage"
+        class="success-message"
+      ></div>
+
+
+      <div
+        id="errorMessage"
+        class="error-message"
+      ></div>
+
+    </div>
+
+
+    <!-- ====================================================
+         PAYMENT STATUS LOOKUP
+         ==================================================== -->
+
+    <div class="section">
+
+      <h3>
+        🧾 Check Payment Status & Confirmation
+      </h3>
+
+      <p style="text-align:center; color:#555;">
+
+        After registration, use your Exhibitor ID and
+        Payment ID to check your payment status and
+        confirmation.
+
+      </p>
+
+
+      <label>
+        Exhibitor ID
+      </label>
+
+      <input
+        id="lookupExhibitorId"
+        type="text"
+        placeholder="Example: NGX-EX-XXXXXXXX"
+      >
+
+
+      <label>
+        Payment ID
+      </label>
+
+      <input
+        id="lookupPaymentId"
+        type="text"
+        placeholder="Example: NGX-PAY-XXXXXXXX"
+      >
+
+
+      <button
+        id="checkPaymentButton"
+        type="button"
+        onclick="checkPayment()"
+      >
+
+        Check Payment
+
+      </button>
+
+
+      <div
+        id="lookupMessage"
+        class="lookup-message"
+      ></div>
+
+
+      <div
+        id="receiptResult"
+        class="receipt-result"
+      >
+
+        <h3>
+          Payment Confirmation
+        </h3>
+
+        <p>
+          <strong>Exhibitor:</strong>
+          <span id="resultName"></span>
+        </p>
+
+        <p>
+          <strong>Exhibitor Type:</strong>
+          <span id="resultType"></span>
+        </p>
+
+        <p>
+          <strong>Business:</strong>
+          <span id="resultBusiness"></span>
+        </p>
+
+        <p>
+          <strong>Amount Paid:</strong>
+          KES <span id="resultAmount"></span>
+        </p>
+
+        <p>
+          <strong>M-Pesa Code:</strong>
+          <span id="resultMpesa"></span>
+        </p>
+
+        <p>
+          <strong>Payment Status:</strong>
+          <span id="resultStatus"></span>
+        </p>
+
+        <p>
+          <strong>Booth / Space:</strong>
+          <span id="resultBooth"></span>
+        </p>
+
+        <p>
+          <strong>Space Description:</strong>
+          <span id="resultSpace"></span>
+        </p>
+
+        <a
+          id="confirmationLink"
+          class="receipt-link"
+          href="#"
+          target="_blank"
+          style="display:none;"
+        >
+
+          🧾 Open Official Payment Confirmation
+
+        </a>
+
+        <a
+          id="originalReceiptLink"
+          class="receipt-link"
+          href="#"
+          target="_blank"
+          style="display:none;"
+        >
+
+          📎 View Uploaded M-Pesa Receipt
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ======================================================
+       FOOTER
+       ====================================================== -->
+
+  <div class="footer">
+
+    NextGen Expo 2026<br>
+
+    14-15 August 2026 | Jericho Market, Nairobi
+
+  </div>
+
+</div>
+
+
+<script>
+
+  // ========================================================
+  // UPDATE SPACE TYPE
+  // ========================================================
+
+  function updateSpaceType() {
+
+    var type =
+      document.getElementById(
+        "exhibitorType"
+      ).value;
+
+    var box =
+      document.getElementById(
+        "premiumDescriptionBox"
+      );
+
+    var description =
+      document.getElementById(
+        "spaceDescription"
+      );
+
+    if (
+      type ===
+      "Premium Exhibition Space"
+    ) {
+
+      box.style.display = "block";
+
+      description.required = true;
+
+    } else {
+
+      box.style.display = "none";
+
+      description.required = false;
+
+      description.value = "";
+
+    }
+
+  }
+
+
+  // ========================================================
+  // DISPLAY ACTUAL AMOUNT ENTERED
+  // ========================================================
+
+  function updateDisplayedAmount() {
+
+    var amount =
+      document.getElementById(
+        "amountPaid"
+      ).value;
+
+    var display =
+      document.getElementById(
+        "displayFee"
+      );
+
+    if (
+      amount &&
+      Number(amount) > 0
+    ) {
+
+      display.textContent =
+        "KES " +
+        Number(amount).toLocaleString();
+
+    } else {
+
+      display.textContent =
+        "Enter Your Amount Below";
+
+    }
+
+  }
+
+
+  // ========================================================
+  // READ RECEIPT FILE
+  // ========================================================
+
+  function readReceiptFile(file) {
+
+    return new Promise(
+      function(resolve, reject) {
+
+        // NO FILE = OPTIONAL
+        if (!file) {
+
+          resolve(null);
+
+          return;
+
+        }
+
+
+        // 5 MB LIMIT
+
+        if (
+          file.size >
+          5 * 1024 * 1024
+        ) {
+
+          reject(
+            new Error(
+              "Receipt file must not exceed 5 MB."
+            )
+          );
+
+          return;
+
+        }
+
+
+        var allowedTypes = [
+          "image/jpeg",
+          "image/png"
+        ];
+
+
+        if (
+          allowedTypes.indexOf(
+            file.type
+          ) === -1
+        ) {
+
+          reject(
+            new Error(
+              "Receipt must be JPG, JPEG or PNG."
+            )
+          );
+
+          return;
+
+        }
+
+
+        var reader =
+          new FileReader();
+
+
+        reader.onload =
+          function(event) {
+
+            resolve({
+
+              fileName:
+                file.name,
+
+              mimeType:
+                file.type,
+
+              base64:
+                event.target.result
+
+            });
+
+          };
+
+
+        reader.onerror =
+          function() {
+
+            reject(
+              new Error(
+                "Unable to read the receipt file."
+              )
+            );
+
+          };
+
+
+        reader.readAsDataURL(file);
+
+      }
+    );
+
+  }
+
+
+  // ========================================================
+  // REGISTER EXHIBITOR
+  // ========================================================
+
+  function register() {
+
+    var button =
+      document.getElementById(
+        "submitButton"
+      );
+
+    var loading =
+      document.getElementById(
+        "loading"
+      );
+
+    var success =
+      document.getElementById(
+        "successMessage"
+      );
+
+    var error =
+      document.getElementById(
+        "errorMessage"
+      );
+
+
+    success.style.display = "none";
+
+    error.style.display = "none";
+
+
+    // ------------------------------------------------------
+    // GET VALUES
+    // ------------------------------------------------------
+
+    var fullName =
+      document.getElementById(
+        "fullName"
+      ).value.trim();
+
+    var phone =
+      document.getElementById(
+        "phone"
+      ).value.trim();
+
+    var email =
+      document.getElementById(
+        "email"
+      ).value.trim();
+
+    var category =
+      document.getElementById(
+        "category"
+      ).value.trim();
+
+    var businessName =
+      document.getElementById(
+        "businessName"
+      ).value.trim();
+
+    var exhibitorType =
+      document.getElementById(
+        "exhibitorType"
+      ).value.trim();
+
+    var spaceDescription =
+      document.getElementById(
+        "spaceDescription"
+      ).value.trim();
+
+    var amountPaid =
+      document.getElementById(
+        "amountPaid"
+      ).value;
+
+    var mpesaCode =
+      document.getElementById(
+        "mpesaCode"
+      ).value.trim();
+
+    var receiptFile =
+      document.getElementById(
+        "receiptFile"
+      ).files[0];
+
+
+    // ------------------------------------------------------
+    // VALIDATION
+    // ------------------------------------------------------
+
+    if (!fullName) {
+
+      showError(
+        "Please enter your full name."
+      );
+
+      return;
+
+    }
+
+
+    if (!phone) {
+
+      showError(
+        "Please enter your phone number."
+      );
+
+      return;
+
+    }
+
+
+    if (!email) {
+
+      showError(
+        "Please enter your email address."
+      );
+
+      return;
+
+    }
+
+
+    if (!category) {
+
+      showError(
+        "Please select your business category."
+      );
+
+      return;
+
+    }
+
+
+    if (!businessName) {
+
+      showError(
+        "Please enter your business name."
+      );
+
+      return;
+
+    }
+
+
+    if (!exhibitorType) {
+
+      showError(
+        "Please select your exhibitor type."
+      );
+
+      return;
+
+    }
+
+
+    if (
+      exhibitorType ===
+      "Premium Exhibition Space" &&
+      !spaceDescription
+    ) {
+
+      showError(
+        "Please describe the Premium Exhibition Space you require."
+      );
+
+      return;
+
+    }
+
+
+    if (
+      !amountPaid ||
+      Number(amountPaid) <= 0
+    ) {
+
+      showError(
+        "Please enter the exact amount you paid."
+      );
+
+      return;
+
+    }
+
+
+    if (!mpesaCode) {
+
+      showError(
+        "Please enter your M-Pesa transaction code."
+      );
+
+      return;
+
+    }
+
+
+    // ------------------------------------------------------
+    // START PROCESSING
+    // ------------------------------------------------------
+
+    button.disabled = true;
+
+    loading.style.display = "block";
+
+
+    // ------------------------------------------------------
+    // OPTIONAL RECEIPT
+    // ------------------------------------------------------
+
+    readReceiptFile(
+      receiptFile
+    )
+
+    .then(
+      function(receiptData) {
+
+        var registrationData = {
+
+          fullName:
+            fullName,
+
+          phone:
+            phone,
+
+          email:
+            email,
+
+          category:
+            category,
+
+          businessName:
+            businessName,
+
+          exhibitorType:
+            exhibitorType,
+
+          amountPaid:
+            Number(amountPaid),
+
+          mpesaCode:
+            mpesaCode,
+
+          receipt:
+            receiptData,
+
+          spaceDescription:
+            spaceDescription
+
+        };
+
+
+        google.script.run
+
+          .withSuccessHandler(
+            function(result) {
+
+              button.disabled = false;
+
+              loading.style.display =
+                "none";
+
+
+              if (
+                result &&
+                result.success
+              ) {
+
+                showSuccess(
+                  result
+                );
+
+
+                // Clear form after success
+
+                document.getElementById(
+                  "fullName"
+                ).value = "";
+
+                document.getElementById(
+                  "phone"
+                ).value = "";
+
+                document.getElementById(
+                  "email"
+                ).value = "";
+
+                document.getElementById(
+                  "category"
+                ).value = "";
+
+                document.getElementById(
+                  "businessName"
+                ).value = "";
+
+                document.getElementById(
+                  "exhibitorType"
+                ).value = "";
+
+                document.getElementById(
+                  "spaceDescription"
+                ).value = "";
+
+                document.getElementById(
+                  "amountPaid"
+                ).value = "";
+
+                document.getElementById(
+                  "mpesaCode"
+                ).value = "";
+
+                document.getElementById(
+                  "receiptFile"
+                ).value = "";
+
+                updateSpaceType();
+
+                updateDisplayedAmount();
+
+              } else {
+
+                showError(
+                  result &&
+                  result.message
+                    ? result.message
+                    : "Registration failed."
+                );
+
+              }
+
+            }
+          )
+
+          .withFailureHandler(
+            function(error) {
+
+              button.disabled = false;
+
+              loading.style.display =
+                "none";
+
+              showError(
+                error.message ||
+                "An unexpected error occurred."
+              );
+
+            }
+          )
+
+          .submitRegistration(
+            registrationData
+          );
+
+      }
+    )
+
+    .catch(
+      function(error) {
+
+        button.disabled = false;
+
+        loading.style.display =
+          "none";
+
+        showError(
+          error.message
+        );
+
+      }
+    );
+
+  }
+
+
+  // ========================================================
+  // SUCCESS MESSAGE
+  // ========================================================
+
+  function showSuccess(result) {
+
+    var success =
+      document.getElementById(
+        "successMessage"
+      );
+
+
+    var html =
+
+      "<strong>Registration Successful!</strong><br><br>" +
+
+      "Your registration has been received.<br><br>" +
+
+      "<strong>Exhibitor ID:</strong> " +
+      escapeHtml(
+        result.exhibitorId
+      ) +
+      "<br>" +
+
+      "<strong>Payment ID:</strong> " +
+      escapeHtml(
+        result.paymentId
+      ) +
+      "<br>" +
+
+      "<strong>Amount Paid:</strong> KES " +
+      Number(
+        result.amountPaid || 0
+      ).toLocaleString() +
+      "<br>" +
+
+      "<strong>Payment Status:</strong> Pending Verification<br><br>" +
+
+      "Please keep your Exhibitor ID and Payment ID.";
+
+    
+    if (
+      result.confirmationUrl
+    ) {
+
+      html +=
+
+        "<br><a class='receipt-link' " +
+        "href='" +
+        escapeAttribute(
+          result.confirmationUrl
+        ) +
+        "' target='_blank'>" +
+
+        "🧾 View Payment Confirmation" +
+
+        "</a>";
+
+    }
+
+
+    if (
+      result.receiptUrl
+    ) {
+
+      html +=
+
+        "<br><br>" +
+
+        "<a class='receipt-link' " +
+        "href='" +
+        escapeAttribute(
+          result.receiptUrl
+        ) +
+        "' target='_blank'>" +
+
+        "📎 View Uploaded Receipt" +
+
+        "</a>";
+
+    }
+
+
+    html +=
+
+      "<br><br>" +
+
+      "Your payment will be reviewed by the NextGen Expo administration.";
+
+
+    success.innerHTML =
+      html;
+
+    success.style.display =
+      "block";
+
+
+    window.scrollTo({
+      top: success.offsetTop - 20,
+      behavior: "smooth"
+    });
+
+  }
+
+
+  // ========================================================
+  // ERROR MESSAGE
+  // ========================================================
+
+  function showError(message) {
+
+    var error =
+      document.getElementById(
+        "errorMessage"
+      );
+
+
+    error.innerHTML =
+      "<strong>Error:</strong><br>" +
+      escapeHtml(
+        message
+      );
+
+
+    error.style.display =
+      "block";
+
+
+    window.scrollTo({
+      top: error.offsetTop - 20,
+      behavior: "smooth"
+    });
+
+  }
+
+
+  // ========================================================
+  // PAYMENT LOOKUP
+  // ========================================================
+
+  function checkPayment() {
+
+    var exhibitorId =
+      document.getElementById(
+        "lookupExhibitorId"
+      ).value.trim();
+
+    var paymentId =
+      document.getElementById(
+        "lookupPaymentId"
+      ).value.trim();
+
+    var button =
+      document.getElementById(
+        "checkPaymentButton"
+      );
+
+    var message =
+      document.getElementById(
+        "lookupMessage"
+      );
+
+    var resultBox =
+      document.getElementById(
+        "receiptResult"
+      );
+
+
+    message.style.display =
+      "none";
+
+    resultBox.style.display =
+      "none";
+
+
+    if (!exhibitorId) {
+
+      showLookupMessage(
+        "Please enter your Exhibitor ID."
+      );
+
+      return;
+
+    }
+
+
+    if (!paymentId) {
+
+      showLookupMessage(
+        "Please enter your Payment ID."
+      );
+
+      return;
+
+    }
+
+
+    button.disabled = true;
+
+    button.textContent =
+      "Checking...";
+
+
+    google.script.run
+
+      .withSuccessHandler(
+        function(result) {
+
+          button.disabled = false;
+
+          button.textContent =
+            "Check Payment";
+
+
+          if (
+            result &&
+            result.success
+          ) {
+
+            displayPaymentResult(
+              result
+            );
+
+          } else {
+
+            showLookupMessage(
+              result &&
+              result.message
+                ? result.message
+                : "Payment record not found."
+            );
+
+          }
+
+        }
+      )
+
+      .withFailureHandler(
+        function(error) {
+
+          button.disabled = false;
+
+          button.textContent =
+            "Check Payment";
+
+
+          showLookupMessage(
+            error.message ||
+            "Unable to check payment."
+          );
+
+        }
+      )
+
+      .getExhibitorReceipt(
+        paymentId,
+        exhibitorId
+      );
+
+  }
+
+
+  // ========================================================
+  // DISPLAY PAYMENT RESULT
+  // ========================================================
+
+  function displayPaymentResult(data) {
+
+    var message =
+      document.getElementById(
+        "lookupMessage"
+      );
+
+    var resultBox =
+      document.getElementById(
+        "receiptResult"
+      );
+
+
+    message.innerHTML =
+
+      "<strong>Payment Record Found.</strong><br>" +
+
+      escapeHtml(
+        data.message ||
+        ""
+      );
+
+
+    message.style.display =
+      "block";
+
+
+    document.getElementById(
+      "resultName"
+    ).textContent =
+      data.fullName || "-";
+
+
+    document.getElementById(
+      "resultType"
+    ).textContent =
+      data.exhibitorType || "-";
+
+
+    document.getElementById(
+      "resultBusiness"
+    ).textContent =
+      data.businessName || "-";
+
+
+    document.getElementById(
+      "resultAmount"
+    ).textContent =
+      Number(
+        data.amount || 0
+      ).toLocaleString();
+
+
+    document.getElementById(
+      "resultMpesa"
+    ).textContent =
+      data.mpesaCode || "-";
+
+
+    document.getElementById(
+      "resultStatus"
+    ).textContent =
+      data.status || "-";
+
+
+    document.getElementById(
+      "resultBooth"
+    ).textContent =
+      data.boothNumber || "Not Assigned";
+
+
+    document.getElementById(
+      "resultSpace"
+    ).textContent =
+      data.spaceDescription ||
+      "Not specified";
+
+
+    var confirmationLink =
+      document.getElementById(
+        "confirmationLink"
+      );
+
+
+    if (
+      data.paymentId &&
+      data.exhibitorId
+    ) {
+
+      var baseUrl =
+        window.location.href
+          .split("?")[0];
+
+
+      var url =
+        baseUrl +
+        "?page=receipt" +
+        "&paymentId=" +
+        encodeURIComponent(
+          data.paymentId
+        ) +
+        "&exhibitorId=" +
+        encodeURIComponent(
+          data.exhibitorId
+        );
+
+
+      confirmationLink.href =
+        url;
+
+      confirmationLink.style.display =
+        "inline-block";
+
+    } else {
+
+      confirmationLink.style.display =
+        "none";
+
+    }
+
+
+    var originalReceiptLink =
+      document.getElementById(
+        "originalReceiptLink"
+      );
+
+
+    if (
+      data.receiptUrl
+    ) {
+
+      originalReceiptLink.href =
+        data.receiptUrl;
+
+      originalReceiptLink.style.display =
+        "inline-block";
+
+    } else {
+
+      originalReceiptLink.style.display =
+        "none";
+
+    }
+
+
+    resultBox.style.display =
+      "block";
+
+
+    resultBox.scrollIntoView({
+      behavior: "smooth"
+    });
+
+  }
+
+
+  // ========================================================
+  // LOOKUP MESSAGE
+  // ========================================================
+
+  function showLookupMessage(message) {
+
+    var box =
+      document.getElementById(
+        "lookupMessage"
+      );
+
+
+    box.innerHTML =
+      escapeHtml(
+        message
+      );
+
+
+    box.style.display =
+      "block";
+
+  }
+
+
+  // ========================================================
+  // HTML ESCAPE
+  // ========================================================
+
+  function escapeHtml(value) {
+
+    var div =
+      document.createElement(
+        "div"
+      );
+
+    div.textContent =
+      value == null
+        ? ""
+        : String(value);
+
+    return div.innerHTML;
+
+  }
+
+
+  // ========================================================
+  // ATTRIBUTE ESCAPE
+  // ========================================================
+
+  function escapeAttribute(value) {
+
+    return String(
+      value || ""
+    )
+      .replace(
+        /&/g,
+        "&amp;"
+      )
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+      .replace(
+        /'/g,
+        "&#39;"
+      )
+      .replace(
+        /</g,
+        "&lt;"
+      )
+      .replace(
+        />/g,
+        "&gt;"
+      );
+
+  }
+
+
+  // ========================================================
+  // INITIALIZE
+  // ========================================================
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+      updateSpaceType();
+
+      updateDisplayedAmount();
+
+    }
+  );
+
+</script>
+
+</body>
+</html>
+```
